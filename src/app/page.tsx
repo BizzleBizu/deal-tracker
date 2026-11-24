@@ -19,13 +19,13 @@ export default function HomePage() {
   const loadItems = useCallback(async () => {
     const { data, error } = await supabase
       .from("wishlist_items")
-      .select("id, name, priority, target_price, status")
+      .select("id, name, priority, target_price, status, item_links(id, store_links(id, url, store, current_price, last_checked, status))")
       .order("created_at", { ascending: false });
     if (error) {
       setError("Could not load your wishlist.");
       return;
     }
-    const sorted = ((data ?? []) as Item[]).sort(
+    const sorted = ((data ?? []) as unknown as Item[]).sort(
       (a, b) => PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority]
     );
     setItems(sorted);
@@ -86,7 +86,7 @@ export default function HomePage() {
         </div>
         <AddItemForm onAdded={loadItems} />
         {error && <p className="text-sm text-red-600">{error}</p>}
-        <ItemList items={items} onDelete={deleteItem} />
+        <ItemList items={items} onDelete={deleteItem} onChanged={loadItems} />
       </div>
     </main>
   );

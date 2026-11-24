@@ -1,11 +1,28 @@
 export type Priority = "must_have" | "nice_to_have" | "only_if_cheap";
 
+export type LinkStatus = "pending" | "ok" | "stale" | "failed";
+
+export type StoreLink = {
+  id: string;
+  url: string;
+  store: string;
+  current_price: number | null;
+  last_checked: string | null;
+  status: LinkStatus;
+};
+
+export type ItemLink = {
+  id: string;
+  store_links: StoreLink | null;
+};
+
 export type Item = {
   id: string;
   name: string;
   priority: Priority;
   target_price: number | null;
   status: string;
+  item_links: ItemLink[];
 };
 
 export const PRIORITY_LABEL: Record<Priority, string> = {
