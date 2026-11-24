@@ -1,4 +1,3 @@
-yaml
 name: Check prices
 on:
   schedule:
