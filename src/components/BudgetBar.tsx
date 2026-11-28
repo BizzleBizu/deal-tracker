@@ -86,7 +86,7 @@ export default function BudgetBar({ items }: { items: Item[] }) {
             {over ? "Over by" : "Remaining"}
           </div>
           <div className={"text-lg font-semibold " + (over ? "text-red-700" : "text-green-700")}>
-            {money(Math.abs(remaining))}
+                        {budget > 0 ? money(Math.abs(remaining)) : "—"}
           </div>
         </div>
       </div>
