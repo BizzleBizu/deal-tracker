@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { PRIORITY_ORDER, type Item } from "@/lib/types";
 import AddItemForm from "@/components/AddItemForm";
 import ItemList from "@/components/ItemList";
+import AlertsLink from "@/components/AlertsLink";
 
 type Profile = { display_name: string; role: string };
 
@@ -80,9 +81,12 @@ export default function HomePage() {
               {profile?.role === "owner" ? " (owner)" : ""}
             </p>
           </div>
-          <button onClick={signOut} className="text-sm text-gray-600 underline">
-            Sign out
-          </button>
+                    <div className="flex items-center gap-4">
+            <AlertsLink />
+            <button onClick={signOut} className="text-sm text-gray-600 underline">
+              Sign out
+            </button>
+          </div>
         </div>
         <AddItemForm onAdded={loadItems} />
         {error && <p className="text-sm text-red-600">{error}</p>}
