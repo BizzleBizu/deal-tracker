@@ -4,6 +4,7 @@ import {
   type Item,
 } from "@/lib/types";
 import ItemLinks from "@/components/ItemLinks";
+import HistoryToggle from "@/components/HistoryToggle";
 
 function bestPrice(item: Item): number | null {
   const prices: number[] = [];
@@ -89,6 +90,7 @@ export default function ItemList({
                   Delete
                 </button>
               </div>
+                            <HistoryToggle item={item} />
               <ItemLinks
                 itemId={item.id}
                 links={item.item_links}
