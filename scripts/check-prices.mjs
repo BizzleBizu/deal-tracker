@@ -41,7 +41,10 @@ for (const link of links) {
   try {
     const price = await fetchPrice(link);
     if (price === null) throw new Error("no price found");
-    if (price !== Number(link.current_price)) {
+     const oldPrice =
+      link.current_price === null ? null : Number(link.current_price);
+    const changed = price !== oldPrice;
+    if (changed) {
       await db
         .from("price_history")
         .insert({ link_id: link.id, price, source: "auto" });
@@ -55,6 +58,17 @@ for (const link of links) {
       })
       .eq("id", link.id);
     console.log("ok", link.store, price);
+        if (changed) {
+      const { data: made, error: alertError } = await db.rpc(
+        "notify_price_change",
+        { p_link_id: link.id, p_old: oldPrice, p_new: price }
+      );
+      if (alertError) {
+        console.log("alert error:", alertError.message);
+      } else {
+        console.log("alerts created:", (made ?? []).length);
+      }
+    }
   } catch (e) {
     await db.from("store_links").update({ status: "stale" }).eq("id", link.id);
     console.log("stale", link.store, e.message);
