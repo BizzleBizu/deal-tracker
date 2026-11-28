@@ -8,6 +8,7 @@ import AddItemForm from "@/components/AddItemForm";
 import ItemList from "@/components/ItemList";
 import AlertsLink from "@/components/AlertsLink";
 import BudgetBar from "@/components/BudgetBar";
+import Link from "next/link";
 
 type Profile = { display_name: string; role: string };
 
@@ -84,6 +85,9 @@ export default function HomePage() {
           </div>
                     <div className="flex items-center gap-4">
             <AlertsLink />
+                        <Link href="/settings" className="text-sm text-gray-600 underline">
+              Settings
+            </Link>
             <button onClick={signOut} className="text-sm text-gray-600 underline">
               Sign out
             </button>
