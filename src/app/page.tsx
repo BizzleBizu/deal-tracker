@@ -7,6 +7,7 @@ import { PRIORITY_ORDER, type Item } from "@/lib/types";
 import AddItemForm from "@/components/AddItemForm";
 import ItemList from "@/components/ItemList";
 import AlertsLink from "@/components/AlertsLink";
+import BudgetBar from "@/components/BudgetBar";
 
 type Profile = { display_name: string; role: string };
 
@@ -88,6 +89,7 @@ export default function HomePage() {
             </button>
           </div>
         </div>
+                <BudgetBar items={items} />
         <AddItemForm onAdded={loadItems} />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <ItemList items={items} onDelete={deleteItem} onChanged={loadItems} />
